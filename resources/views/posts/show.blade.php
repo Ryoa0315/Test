@@ -7,6 +7,8 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
     <body>
+        <a href="">{{ $post->category->name }}</a>
+        <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
         <h1 class "title">
             {{ $post->title}}
         </h1>
