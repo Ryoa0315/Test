@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<x-app-layout>
+        <x-slot name="header">
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -6,6 +7,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
+    </x-slot>
     <body>
         <h1>Blog Name</h1>
         <a href='/posts/create'>create</a>
@@ -22,6 +24,7 @@
                 </form>
             </div>
             @endforeach
+            {{ Auth::user()->name }}
         </div>
         <div class='paginate'>{{ $posts->links()}}</div>
         <script>
@@ -35,3 +38,4 @@
         </script>
     </body>
 </html>
+</x-app-layout>

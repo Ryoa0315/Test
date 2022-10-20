@@ -11,15 +11,26 @@ use App\Http\Controllers\CategoryController;
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great
+| contains the "web" middleware group. Now create something great!
 |
 */
 
-Route::get('/', [PostController::class, 'index']);
-Route::get('/posts/create',[PostController::class,'create']);
-Route::get('/posts/{post}', [PostController::class, 'show']);
-Route::post('/posts', [PostController::class, 'store']);
-Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
-Route::put('posts/{post}', [PostController::class, 'update']);
-Route::delete('/posts/{post}', [PostController::class,'delete']);
-Route::get('/categories/{category}', [CategoryController::class,'index']);
+Route::controller(PostController::class)->middleware(['auth'])->group(function(){
+    Route::get('/', 'index')->name('index');
+    Route::post('/posts', 'store')->name('store');
+    Route::get('/posts/create', 'create')->name('create');
+    Route::get('/posts/{post}', 'show')->name('show');
+    Route::post('/posts/{post}', 'update')->name('update');
+    Route::delete('/delete', 'delete')->name('delete');
+    Route::get('/edit', 'edit')->name('edit');
+});
+
+Route::controller(PostController::class)->middleware(['auth'])->group(function(){
+    Route::get('/categories/{category}', [CategoryController::class,'index']);
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+require __DIR__.'/auth.php';
